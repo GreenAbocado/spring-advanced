@@ -1,6 +1,5 @@
-package org.example.expert.config;
+package org.example.expert.common;
 
-import java.time.LocalDateTime;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import jakarta.servlet.http.HttpServletRequest;

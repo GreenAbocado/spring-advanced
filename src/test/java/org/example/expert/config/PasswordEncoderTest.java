@@ -1,5 +1,6 @@
 package org.example.expert.config;
 
+import org.example.expert.common.PasswordEncoder;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
