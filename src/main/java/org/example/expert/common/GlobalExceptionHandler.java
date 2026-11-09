@@ -1,10 +1,12 @@
-package org.example.expert.config;
+package org.example.expert.common;
 
 import org.example.expert.domain.auth.exception.AuthException;
 import org.example.expert.domain.common.exception.InvalidRequestException;
 import org.example.expert.domain.common.exception.ServerException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -19,6 +21,14 @@ public class GlobalExceptionHandler {
         HttpStatus status = HttpStatus.BAD_REQUEST;
         return getErrorResponse(status, ex.getMessage());
     }
+
+	// 빈 검증에서 첫 번째 필드 에러 메시지만 뽑아 전달
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public ResponseEntity<Map<String, Object>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		FieldError fieldError = ex.getBindingResult().getFieldError();
+		return getErrorResponse(status, fieldError == null ? "입력값 검증에 실패하였습니다." : fieldError.getDefaultMessage());
+	}
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<Map<String, Object>> handleAuthException(AuthException ex) {

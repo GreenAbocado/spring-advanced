@@ -2,7 +2,8 @@ package org.example.expert.config;
 
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
+import org.example.expert.common.AdminInterceptor;
+import org.example.expert.common.AuthUserArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
