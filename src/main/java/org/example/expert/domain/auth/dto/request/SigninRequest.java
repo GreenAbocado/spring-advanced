@@ -1,18 +1,20 @@
 package org.example.expert.domain.auth.dto.request;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import static org.example.expert.domain.auth.common.ValidationConst.*;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class SigninRequest {
-    
-    @NotBlank @Email
-    private String email;
-    @NotBlank
-    private String password;
+import jakarta.validation.constraints.NotBlank;
+
+/* 레코드를 통한 간소화 및 불변 안정성 + 메시지 추가
+   서비스에서 단순 비교에 사용되는 값이므로 NotBlank 검증만 수행 */
+public record SigninRequest(
+	@NotBlank(message = EMAIL_IS_BLANK)
+	String email,
+
+	@NotBlank(message = PASSWORD_IS_BLANK)
+	String password
+) {
+	// 이메일 공백 제거를 통한 데이터 일관성 확보
+	public SigninRequest {
+		email = (email == null) ? null : email.trim();
+	}
 }
